@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { Router, navigate } from '@reach/router';
+
+import Navigation from './components/Navigation';
+import Login from './components/Login';
+import Register from './components/Register';
+import Protected from './components/Protected';
+import Content from './components/Content';
+
+export const UserContext = React.createContext([]);
 
 function App() {
+  const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(true)
+
+  const logoutCallback = async () => {
+
+  }
+
+  useEffect(() => {
+
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={[user, setUser]}>
+      <div className="App">
+        <Navigation logoutCallback={logoutCallback}/>
+        <Router id="router">
+          <Login path="login" />
+          <Register path="register" />
+          <Protected path="protected" />
+          <Content path="/" /> 
+        </Router>
+      </div>
+    </UserContext.Provider>
   );
 }
 
